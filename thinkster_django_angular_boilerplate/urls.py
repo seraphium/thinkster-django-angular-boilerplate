@@ -5,10 +5,18 @@ from authentication.views import AccountViewSet
 from authentication.views import LoginView
 from authentication.views import LogoutView
 from django.contrib import admin
+from posts.views import AccountPostsViewSet, PostViewSet
 
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
+
+router.register(r'posts', PostViewSet)
+
+accounts_router = routers.NestedSimpleRouter(
+    router, r'accounts', lookup='account'
+)
+accounts_router.register(r'posts', AccountPostsViewSet)
 
 urlpatterns = patterns(
     '',
